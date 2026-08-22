@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { User, UserRole } from '../types';
 import {
   GraduationCap,
-  CheckCircle2,
   ArrowRight,
   ChevronDown,
   ShieldCheck,
@@ -133,28 +132,6 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
           <p className="text-slate-400 text-xs sm:text-sm text-center leading-relaxed max-w-sm mx-auto">
             Sistema de elaboração, acompanhamento presencial e exportação oficial da Ficha de Atividades de TCC.
           </p>
-        </div>
-
-        {/* Login Rules & Information */}
-        <div className="bg-[#0D1527] rounded-2xl p-4 sm:p-5 border border-slate-800/80 space-y-3 text-xs text-slate-300 shadow-xl">
-          <div className="flex items-start space-x-2.5">
-            <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-            <span>
-              <strong className="text-white font-bold">Modo Aluno:</strong> Preenchimento da situação-problema, hipótese e registro de orientações.
-            </span>
-          </div>
-          <div className="flex items-start space-x-2.5">
-            <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-            <span>
-              <strong className="text-white font-bold">Modo Professor:</strong> Acesso restrito a docentes para avaliação, parecer e assinatura digital.
-            </span>
-          </div>
-          <div className="flex items-start space-x-2.5">
-            <CheckCircle2 className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
-            <span>
-              <strong className="text-white font-bold">Exportação Direta:</strong> Geração instantânea em PDF e Microsoft Word (.DOCX).
-            </span>
-          </div>
         </div>
 
         {/* Primary Login Form */}
