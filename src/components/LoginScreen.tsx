@@ -135,7 +135,16 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
         </div>
 
         {/* Primary Login Form */}
-        <form onSubmit={handleSubmit} className="bg-[#0D1527] rounded-2xl p-5 sm:p-6 border border-slate-800 space-y-4 shadow-2xl">
+        <form
+          onSubmit={handleSubmit}
+          autoComplete="off"
+          data-lpignore="true"
+          className="bg-[#0D1527] rounded-2xl p-5 sm:p-6 border border-slate-800 space-y-4 shadow-2xl"
+        >
+          {/* Hidden inputs to prevent aggressive browser autofill and address manager popups */}
+          <input type="text" name="prevent_autofill_user" className="hidden" tabIndex={-1} autoComplete="off" />
+          <input type="password" name="prevent_autofill_pwd" className="hidden" tabIndex={-1} autoComplete="new-password" />
+
           <div className="border-b border-slate-800 pb-3 mb-2 flex items-center justify-between">
             <h2 className="text-base font-bold text-white flex items-center space-x-2">
               <Lock className="w-4 h-4 text-blue-400" />
@@ -155,8 +164,17 @@ export const LoginScreen: React.FC<LoginScreenProps> = ({ onLoginSuccess }) => {
             </label>
             <div className="relative">
               <input
-                type="email"
+                type="text"
+                inputMode="email"
                 required
+                id="login_auth_user_field"
+                name="usr_login_identifier_unfilled"
+                autoComplete="one-time-code"
+                autoCorrect="off"
+                autoCapitalize="none"
+                spellCheck="false"
+                data-lpignore="true"
+                data-form-type="other"
                 value={email}
                 onChange={(e) => {
                   setEmail(e.target.value);
