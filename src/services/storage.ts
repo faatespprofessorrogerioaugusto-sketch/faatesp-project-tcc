@@ -256,16 +256,47 @@ export const storageService = {
       const data = localStorage.getItem(STORAGE_KEY_FICHAS);
       const institutionalLogo = this.getInstitutionalLogo();
 
-      if (!data) {
-        const seeded = INITIAL_FICHAS.map((f) => ({
-          ...f,
-          logoUrl: institutionalLogo || f.logoUrl || ''
-        }));
+      if (data === null) {
+        // First access only: seed with one blank template if never initialized
+        const initialBlank: FichaTCC = {
+          id: 'ficha-faatesp-001',
+          tituloTrabalho: '',
+          nomeAluno: '',
+          curso: '',
+          semestre: '7º Semestre 2026/2',
+          professorOrientador: '',
+          situacaoProblema: '',
+          hipotese: '',
+          bibliografia: '',
+          orientacoes: [
+            {
+              id: 'ori-1',
+              data: '',
+              horario: '',
+              observacao: '',
+              confirmado: false
+            },
+            {
+              id: 'ori-2',
+              data: '',
+              horario: '',
+              observacao: '',
+              confirmado: false
+            }
+          ],
+          nota: '',
+          status: 'rascunho',
+          dataCriacao: new Date().toISOString(),
+          ultimaAtualizacao: new Date().toISOString(),
+          usuarioId: 'aluno-1',
+          logoUrl: institutionalLogo || ''
+        };
+        const seeded = [initialBlank];
         localStorage.setItem(STORAGE_KEY_FICHAS, JSON.stringify(seeded));
         return seeded;
       }
       const parsed = JSON.parse(data);
-      if (Array.isArray(parsed) && parsed.length > 0) {
+      if (Array.isArray(parsed)) {
         let changed = false;
         const cleaned = parsed.map((f: FichaTCC) => {
           let cursoVal = f.curso || '';
@@ -292,9 +323,9 @@ export const storageService = {
         }
         return cleaned;
       }
-      return INITIAL_FICHAS;
+      return [];
     } catch {
-      return INITIAL_FICHAS;
+      return [];
     }
   },
 
