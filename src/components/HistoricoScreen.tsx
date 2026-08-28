@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { FichaTCC, User } from '../types';
 import { storageService } from '../services/storage';
+import { cloudStorageService } from '../services/cloudStorage';
 import {
   Plus,
   Search,
@@ -69,9 +70,9 @@ export const HistoricoScreen: React.FC<HistoricoScreenProps> = ({
       f.professorOrientador?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
-  const handleDelete = (id: string, title: string) => {
+  const handleDelete = async (id: string, title: string) => {
     if (confirm(`Deseja realmente excluir a ficha "${title || 'Sem título'}"?`)) {
-      storageService.deleteFicha(id);
+      await cloudStorageService.deleteFicha(id);
       onRefreshFichas();
     }
   };

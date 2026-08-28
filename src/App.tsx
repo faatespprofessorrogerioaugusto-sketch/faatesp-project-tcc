@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { ActiveScreen, FichaTCC, User } from './types';
 import { storageService } from './services/storage';
+import { cloudStorageService } from './services/cloudStorage';
 import { LoginScreen } from './components/LoginScreen';
 import { Header } from './components/Header';
 import { MainDashboard } from './components/MainDashboard';
@@ -18,22 +19,34 @@ export default function App() {
 
   // Initial screen must ALWAYS be the Login Screen (do not auto-login on startup)
   useEffect(() => {
-    // We clear any auto-login session so user explicitly starts at Login
     setUser(null);
     loadFichasData(null);
   }, []);
 
-  const loadFichasData = (currentUser?: User | null) => {
+  // Real-time Firestore subscription to synchronize between multiple devices/browsers
+  useEffect(() => {
+    const unsubscribe = cloudStorageService.subscribeToFichas((cloudFichas) => {
+      setFichas(cloudFichas);
+      if (activeFicha) {
+        const updatedActive = cloudFichas.find((f) => f.id === activeFicha.id);
+        if (updatedActive) {
+          setActiveFicha(updatedActive);
+        }
+      }
+    });
+    return () => unsubscribe();
+  }, [activeFicha?.id]);
+
+  const loadFichasData = async (currentUser?: User | null) => {
     const activeUser = currentUser !== undefined ? currentUser : user;
-    const allFichas = storageService.getFichas();
+    const allFichas = await cloudStorageService.getFichas();
     setFichas(allFichas);
 
     const activeId = storageService.getActiveFichaId();
     if (activeUser?.role === 'aluno') {
-      // Robust student ficha recovery
-      const studentFicha = storageService.getStudentFicha(activeUser);
+      const studentFicha = await cloudStorageService.getStudentFicha(activeUser);
       setActiveFicha(studentFicha);
-      const updatedAll = storageService.getFichas();
+      const updatedAll = await cloudStorageService.getFichas();
       setFichas(updatedAll);
     } else {
       const found = (activeId ? allFichas.find((f) => f.id === activeId) : null) || allFichas[0] || null;
@@ -41,31 +54,35 @@ export default function App() {
     }
   };
 
-  const handleLoginSuccess = (loggedUser: User) => {
+  const handleLoginSuccess = async (loggedUser: User) => {
     storageService.setLoggedUser(loggedUser);
-    storageService.recordUserAccess(loggedUser);
+    cloudStorageService.logUserAccess(loggedUser, 'login');
     setUser(loggedUser);
-    loadFichasData(loggedUser);
+    await loadFichasData(loggedUser);
     setActiveScreen('main');
   };
 
   const handleLogout = () => {
+    if (user) {
+      cloudStorageService.logUserAccess(user, 'logout');
+    }
     storageService.logoutUser();
     setUser(null);
     setActiveScreen('main');
   };
 
-  const handleSaveFicha = (updatedFicha: FichaTCC) => {
-    storageService.saveFicha(updatedFicha);
+  const handleSaveFicha = async (updatedFicha: FichaTCC) => {
+    await cloudStorageService.saveFicha(updatedFicha);
     setActiveFicha(updatedFicha);
-    const refreshed = storageService.getFichas();
+    const refreshed = await cloudStorageService.getFichas();
     setFichas(refreshed);
   };
 
-  const handleCreateNew = () => {
+  const handleCreateNew = async () => {
     if (!user) return;
     const newFicha = storageService.createNewFicha(user);
-    loadFichasData();
+    await cloudStorageService.saveFicha(newFicha);
+    await loadFichasData();
     setActiveFicha(newFicha);
     setActiveScreen('editar');
   };
@@ -74,7 +91,7 @@ export default function App() {
     id: string,
     action: 'editar' | 'preview'
   ) => {
-    const selected = storageService.getFichaById(id);
+    const selected = fichas.find((f) => f.id === id) || storageService.getFichaById(id);
     if (selected) {
       storageService.setActiveFichaId(id);
       setActiveFicha(selected);
@@ -82,9 +99,9 @@ export default function App() {
     }
   };
 
-  const handleDeleteFicha = (id: string) => {
-    storageService.deleteFicha(id);
-    loadFichasData();
+  const handleDeleteFicha = async (id: string) => {
+    await cloudStorageService.deleteFicha(id);
+    await loadFichasData();
   };
 
   // 1. Separate Login Screen Gate

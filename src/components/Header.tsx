@@ -84,6 +84,12 @@ export const Header: React.FC<HeaderProps> = ({
 
           {/* User Profile & Actions */}
           <div className="flex items-center space-x-3">
+            {/* Cloud Sync Status Indicator */}
+            <div className="hidden sm:flex items-center space-x-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-emerald-950/70 text-emerald-400 border border-emerald-800/60 shadow-sm" title="Banco de dados em nuvem ativo e sincronizado">
+              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span>Nuvem Ativa</span>
+            </div>
+
             {/* Fixed Logged-in Mode Badge */}
             <div
               className={`hidden sm:flex items-center space-x-1.5 px-3 py-1 rounded-full text-xs font-bold border shadow-sm ${
