@@ -484,6 +484,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
           <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
           <input
             type="text"
+            id="search_fichas_term"
+            autoComplete="one-time-code"
+            autoCorrect="off"
+            spellCheck="false"
+            data-lpignore="true"
+            data-form-type="other"
             placeholder="Buscar por aluno, título do TCC ou curso..."
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -790,6 +796,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                   </label>
                   <textarea
                     rows={4}
+                    id="field_parecer_orientador_text"
+                    autoComplete="one-time-code"
+                    autoCorrect="off"
+                    spellCheck="false"
+                    data-lpignore="true"
+                    data-form-type="other"
                     value={parecerText}
                     onChange={(e) => setParecerText(e.target.value)}
                     placeholder="Escreva aqui o parecer final, orientações de correção ou elogios ao trabalho do aluno..."
@@ -805,6 +817,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                     </label>
                     <input
                       type="text"
+                      id="field_modal_nota_input"
+                      autoComplete="one-time-code"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      data-lpignore="true"
+                      data-form-type="other"
                       value={notaInput}
                       onChange={(e) => setNotaInput(e.target.value)}
                       placeholder="Ex: 9.5 ou Aprovado"
@@ -819,6 +837,8 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                     </label>
                     <select
                       value={statusInput}
+                      id="field_modal_status_select"
+                      data-lpignore="true"
                       onChange={(e) => setStatusInput(e.target.value as FichaTCC['status'])}
                       className="w-full bg-[#0d1629] border border-slate-700/90 rounded-xl px-3 py-2 text-xs text-white focus:outline-none focus:border-amber-500 cursor-pointer"
                     >
@@ -1214,6 +1234,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                     </label>
                     <textarea
                       rows={5}
+                      id="field_email_body_text"
+                      autoComplete="one-time-code"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      data-lpignore="true"
+                      data-form-type="other"
                       value={emailBody}
                       onChange={(e) => setEmailBody(e.target.value)}
                       className="w-full bg-[#0d1629] border border-slate-700 rounded-xl p-3 text-xs text-slate-200 focus:outline-none focus:border-purple-500 leading-relaxed font-sans"
@@ -1288,6 +1314,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                           </label>
                           <input
                             type="text"
+                            id="field_smtp_host"
+                            autoComplete="one-time-code"
+                            autoCorrect="off"
+                            spellCheck="false"
+                            data-lpignore="true"
+                            data-form-type="other"
                             value={smtpHost}
                             onChange={(e) => setSmtpHost(e.target.value)}
                             placeholder="ex: smtp.gmail.com ou smtp.office365.com"
@@ -1300,6 +1332,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                           </label>
                           <input
                             type="text"
+                            id="field_smtp_port"
+                            autoComplete="one-time-code"
+                            autoCorrect="off"
+                            spellCheck="false"
+                            data-lpignore="true"
+                            data-form-type="other"
                             value={smtpPort}
                             onChange={(e) => setSmtpPort(e.target.value)}
                             placeholder="587 ou 465"
@@ -1315,6 +1353,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                           </label>
                           <input
                             type="text"
+                            id="field_smtp_user"
+                            autoComplete="one-time-code"
+                            autoCorrect="off"
+                            spellCheck="false"
+                            data-lpignore="true"
+                            data-form-type="other"
                             value={smtpUser}
                             onChange={(e) => setSmtpUser(e.target.value)}
                             placeholder="usuario@faatesp.edu.br"
@@ -1327,6 +1371,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                           </label>
                           <input
                             type="password"
+                            id="field_smtp_pass"
+                            autoComplete="new-password"
+                            autoCorrect="off"
+                            spellCheck="false"
+                            data-lpignore="true"
+                            data-form-type="other"
                             value={smtpPass}
                             onChange={(e) => setSmtpPass(e.target.value)}
                             placeholder="••••••••••••"
@@ -1341,6 +1391,12 @@ export const ConsultaOrientadorScreen: React.FC<ConsultaOrientadorScreenProps> =
                         </label>
                         <input
                           type="text"
+                          id="field_smtp_from"
+                          autoComplete="one-time-code"
+                          autoCorrect="off"
+                          spellCheck="false"
+                          data-lpignore="true"
+                          data-form-type="other"
                           value={smtpFrom}
                           onChange={(e) => setSmtpFrom(e.target.value)}
                           placeholder="FAATESP TCC <orientacao@faatesp.edu.br>"

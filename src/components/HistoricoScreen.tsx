@@ -105,6 +105,12 @@ export const HistoricoScreen: React.FC<HistoricoScreenProps> = ({
         <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3.5" />
         <input
           type="text"
+          id="search_history_fichas"
+          autoComplete="one-time-code"
+          autoCorrect="off"
+          spellCheck="false"
+          data-lpignore="true"
+          data-form-type="other"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Buscar por nome do aluno, título, curso ou professor orientador..."

@@ -265,7 +265,16 @@ export const FichaForm: React.FC<FichaFormProps> = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-8 max-w-4xl mx-auto pb-12">
+    <form
+      onSubmit={handleSubmit}
+      autoComplete="off"
+      data-lpignore="true"
+      className="space-y-8 max-w-4xl mx-auto pb-12"
+    >
+      {/* Hidden inputs to shield against aggressive browser autofill */}
+      <input type="text" name="prevent_autofill_user_ficha" className="hidden" tabIndex={-1} autoComplete="off" />
+      <input type="password" name="prevent_autofill_pwd_ficha" className="hidden" tabIndex={-1} autoComplete="new-password" />
+
       {/* Top Banner & Quick Actions */}
       <div className="bg-[#0d1527] p-5 rounded-2xl border border-slate-800 shadow-xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
@@ -379,6 +388,12 @@ export const FichaForm: React.FC<FichaFormProps> = ({
             <input
               type="text"
               name="tituloTrabalho"
+              id="field_tcc_titulo"
+              autoComplete="one-time-code"
+              autoCorrect="off"
+              spellCheck="false"
+              data-lpignore="true"
+              data-form-type="other"
               value={formData.tituloTrabalho}
               onChange={handleChange}
               placeholder="Ex: Desenvolvimento de Sistema Web para Gestão de Atividades de TCC"
@@ -393,6 +408,12 @@ export const FichaForm: React.FC<FichaFormProps> = ({
             <input
               type="text"
               name="nomeAluno"
+              id="field_tcc_aluno_nome"
+              autoComplete="one-time-code"
+              autoCorrect="off"
+              spellCheck="false"
+              data-lpignore="true"
+              data-form-type="other"
               value={formData.nomeAluno || ''}
               onChange={handleChange}
               placeholder="Digite o nome completo do aluno(a)"
@@ -406,6 +427,8 @@ export const FichaForm: React.FC<FichaFormProps> = ({
             </label>
             <select
               name="curso"
+              id="field_tcc_curso"
+              data-lpignore="true"
               value={formData.curso || ''}
               onChange={handleChange}
               className="w-full bg-[#0b1325] text-white border border-slate-700 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 font-medium"
@@ -430,6 +453,9 @@ export const FichaForm: React.FC<FichaFormProps> = ({
             <input
               type="text"
               name="semestre"
+              id="field_tcc_semestre"
+              autoComplete="one-time-code"
+              data-lpignore="true"
               value="7º Semestre 2026/2"
               readOnly
               className="w-full bg-[#0b1325]/90 text-slate-200 border border-slate-700 rounded-lg px-3 py-2 text-sm font-semibold cursor-not-allowed select-none"
@@ -442,6 +468,8 @@ export const FichaForm: React.FC<FichaFormProps> = ({
             </label>
             <select
               name="professorOrientador"
+              id="field_tcc_orientador"
+              data-lpignore="true"
               value={formData.professorOrientador || ''}
               onChange={handleProfessorOrientadorChange}
               className="w-full bg-[#0b1325] text-white border border-slate-700 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500 cursor-pointer font-medium"
@@ -470,6 +498,12 @@ export const FichaForm: React.FC<FichaFormProps> = ({
             <input
               type="text"
               name="nota"
+              id="field_tcc_nota_val"
+              autoComplete="one-time-code"
+              autoCorrect="off"
+              spellCheck="false"
+              data-lpignore="true"
+              data-form-type="other"
               value={formData.nota || ''}
               onChange={handleChange}
               placeholder={currentUser.role === 'orientador' ? "Ex: 9.5" : "Atribuído pelo orientador"}
@@ -498,6 +532,12 @@ export const FichaForm: React.FC<FichaFormProps> = ({
           </p>
           <textarea
             name="situacaoProblema"
+            id="field_tcc_situacao"
+            autoComplete="one-time-code"
+            autoCorrect="off"
+            spellCheck="false"
+            data-lpignore="true"
+            data-form-type="other"
             value={formData.situacaoProblema}
             onChange={handleChange}
             rows={4}
@@ -516,6 +556,12 @@ export const FichaForm: React.FC<FichaFormProps> = ({
           </p>
           <textarea
             name="hipotese"
+            id="field_tcc_hipotese"
+            autoComplete="one-time-code"
+            autoCorrect="off"
+            spellCheck="false"
+            data-lpignore="true"
+            data-form-type="other"
             value={formData.hipotese}
             onChange={handleChange}
             rows={4}
@@ -534,6 +580,12 @@ export const FichaForm: React.FC<FichaFormProps> = ({
           </p>
           <textarea
             name="bibliografia"
+            id="field_tcc_biblio"
+            autoComplete="one-time-code"
+            autoCorrect="off"
+            spellCheck="false"
+            data-lpignore="true"
+            data-form-type="other"
             value={formData.bibliografia}
             onChange={handleChange}
             rows={4}
@@ -626,6 +678,8 @@ export const FichaForm: React.FC<FichaFormProps> = ({
                     </label>
                     <input
                       type="date"
+                      autoComplete="off"
+                      data-lpignore="true"
                       value={ori.data}
                       onChange={(e) => handleOrientationChange(index, 'data', e.target.value)}
                       className="w-full px-2.5 py-1.5 text-xs border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 bg-[#070c18] text-white"
@@ -638,6 +692,8 @@ export const FichaForm: React.FC<FichaFormProps> = ({
                     </label>
                     <input
                       type="time"
+                      autoComplete="off"
+                      data-lpignore="true"
                       value={ori.horario}
                       onChange={(e) => handleOrientationChange(index, 'horario', e.target.value)}
                       className="w-full px-2.5 py-1.5 text-xs border border-slate-700 rounded-lg focus:ring-2 focus:ring-blue-500 bg-[#070c18] text-white"
@@ -649,6 +705,11 @@ export const FichaForm: React.FC<FichaFormProps> = ({
                       Observação / Apontamentos da Orientação Presencial
                     </label>
                     <textarea
+                      autoComplete="one-time-code"
+                      autoCorrect="off"
+                      spellCheck="false"
+                      data-lpignore="true"
+                      data-form-type="other"
                       value={ori.observacao}
                       onChange={(e) => handleOrientationChange(index, 'observacao', e.target.value)}
                       rows={2}
