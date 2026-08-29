@@ -5,12 +5,10 @@ import {
   Trash2,
   CheckCircle,
   Save,
-  Eye,
   FileDown,
   AlertCircle,
   RotateCcw,
   ShieldCheck,
-  Home,
   FileType,
   FileText,
   Loader2
@@ -293,18 +291,6 @@ export const FichaForm: React.FC<FichaFormProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2 w-full sm:w-auto">
-          {onNavigateMain && (
-            <button
-              type="button"
-              onClick={onNavigateMain}
-              className="flex-1 sm:flex-initial px-3 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs sm:text-sm rounded-lg border border-slate-700 transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
-              title="Voltar à Tela Inicial"
-            >
-              <Home className="w-4 h-4 text-blue-400" />
-              <span>Tela Inicial</span>
-            </button>
-          )}
-
           <button
             type="button"
             onClick={handleClearForm}
@@ -322,17 +308,6 @@ export const FichaForm: React.FC<FichaFormProps> = ({
             <Save className="w-4 h-4" />
             <span>Salvar Ficha</span>
           </button>
-
-          {onPreview && (
-            <button
-              type="button"
-              onClick={onPreview}
-              className="flex-1 sm:flex-initial px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-white font-medium text-xs sm:text-sm rounded-lg border border-slate-700 transition-colors flex items-center justify-center space-x-1.5 cursor-pointer"
-            >
-              <Eye className="w-4 h-4 text-blue-400" />
-              <span>Pré-Visualização</span>
-            </button>
-          )}
 
           {/* Direct Export Buttons staying in place */}
           <button
@@ -732,60 +707,36 @@ export const FichaForm: React.FC<FichaFormProps> = ({
       )}
 
       {/* Save Button Footer */}
-      <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-800">
-        {onNavigateMain ? (
-          <button
-            type="button"
-            onClick={onNavigateMain}
-            className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-sm rounded-xl border border-slate-700 transition-colors flex items-center space-x-2 cursor-pointer"
-          >
-            <Home className="w-4 h-4 text-blue-400" />
-            <span>Voltar à Tela Inicial</span>
-          </button>
-        ) : <div />}
+      <div className="flex flex-wrap items-center justify-end gap-2 pt-4 border-t border-slate-800">
+        <button
+          type="button"
+          onClick={handleDirectExportPdf}
+          disabled={isExportingPdf}
+          className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-md transition-colors flex items-center space-x-1.5 cursor-pointer"
+          title="Exportar PDF diretamente sem sair da tela"
+        >
+          {isExportingPdf ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileType className="w-4 h-4" />}
+          <span>Exportar PDF</span>
+        </button>
 
-        <div className="flex flex-wrap items-center gap-2">
-          {onPreview && (
-            <button
-              type="button"
-              onClick={onPreview}
-              className="px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-semibold text-sm rounded-xl border border-slate-700 transition-colors flex items-center space-x-1.5 cursor-pointer"
-            >
-              <Eye className="w-4 h-4 text-blue-400" />
-              <span>Pré-Visualização</span>
-            </button>
-          )}
+        <button
+          type="button"
+          onClick={handleDirectExportDocx}
+          disabled={isExportingDocx}
+          className="px-4 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-md transition-colors flex items-center space-x-1.5 cursor-pointer"
+          title="Exportar Word (.DOCX) diretamente sem sair da tela"
+        >
+          {isExportingDocx ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
+          <span>Exportar Word</span>
+        </button>
 
-          <button
-            type="button"
-            onClick={handleDirectExportPdf}
-            disabled={isExportingPdf}
-            className="px-4 py-2.5 bg-rose-600 hover:bg-rose-700 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-md transition-colors flex items-center space-x-1.5 cursor-pointer"
-            title="Exportar PDF diretamente sem sair da tela"
-          >
-            {isExportingPdf ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileType className="w-4 h-4" />}
-            <span>Exportar PDF</span>
-          </button>
-
-          <button
-            type="button"
-            onClick={handleDirectExportDocx}
-            disabled={isExportingDocx}
-            className="px-4 py-2.5 bg-blue-500 hover:bg-blue-600 disabled:opacity-50 text-white font-semibold text-sm rounded-xl shadow-md transition-colors flex items-center space-x-1.5 cursor-pointer"
-            title="Exportar Word (.DOCX) diretamente sem sair da tela"
-          >
-            {isExportingDocx ? <Loader2 className="w-4 h-4 animate-spin" /> : <FileText className="w-4 h-4" />}
-            <span>Exportar Word</span>
-          </button>
-
-          <button
-            type="submit"
-            className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-lg transition-colors flex items-center space-x-2 cursor-pointer"
-          >
-            <Save className="w-4 h-4" />
-            <span>Salvar Alterações</span>
-          </button>
-        </div>
+        <button
+          type="submit"
+          className="px-6 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-semibold text-sm rounded-xl shadow-lg transition-colors flex items-center space-x-2 cursor-pointer"
+        >
+          <Save className="w-4 h-4" />
+          <span>Salvar Alterações</span>
+        </button>
       </div>
     </form>
   );

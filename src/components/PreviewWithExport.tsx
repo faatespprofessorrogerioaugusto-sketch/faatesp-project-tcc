@@ -7,7 +7,6 @@ import {
   FileText,
   FileEdit,
   Printer,
-  Home,
   CheckCircle2,
   AlertCircle,
   Loader2,
@@ -16,7 +15,7 @@ import {
 
 interface PreviewWithExportProps {
   ficha: FichaTCC;
-  onNavigateMain: () => void;
+  onNavigateMain?: () => void;
   onNavigateEdit: () => void;
 }
 
@@ -100,15 +99,6 @@ export const PreviewWithExport: React.FC<PreviewWithExportProps> = ({
         </div>
 
         <div className="flex flex-wrap items-center gap-2">
-          <button
-            type="button"
-            onClick={onNavigateMain}
-            className="px-3.5 py-2 bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-semibold rounded-xl border border-slate-700 transition-colors flex items-center space-x-1.5 cursor-pointer"
-          >
-            <Home className="w-3.5 h-3.5 text-slate-400" />
-            <span>Tela Inicial</span>
-          </button>
-
           <button
             type="button"
             onClick={onNavigateEdit}
